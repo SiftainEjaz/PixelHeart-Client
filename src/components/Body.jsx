@@ -1,4 +1,4 @@
-import Navbar from './Navbar';
+import NavBar from './NavBar';
 import Footer from './Footer';
 import { Outlet, useNavigate } from 'react-router';
 import axios from 'axios';
@@ -33,7 +33,7 @@ const Body = () => {
 
     return (
         <>
-            <Navbar />
+            <NavBar />
             <Outlet />
             <Footer />
         </>
