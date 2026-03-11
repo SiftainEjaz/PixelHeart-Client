@@ -7,10 +7,12 @@ import BASE_URL from '../utils/constants.js';
 const Requests = () => {
 
   const dispatch = useDispatch();
-  const { data: requests = [], status } = useSelector(store => store.request);
+  const requests = useSelector(store => store.request);
 
   const fetchRequest = async () => {
     try {
+      if(requests.length > 0)
+        return;
       const res = await axios.get(
         BASE_URL + "/user/requests/received",
         { withCredentials: true }
@@ -41,8 +43,8 @@ const Requests = () => {
     fetchRequest();
   }, [])
 
-  if (status === 'idle')
-    return null;
+  if(!requests)
+    return;
 
   if (requests.length === 0) {
     return <h1 className='flex justify-center my-3 text-xl'>No Requests found!</h1>

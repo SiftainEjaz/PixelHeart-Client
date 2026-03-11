@@ -6,15 +6,19 @@ import { addConnections } from '../utils/connectionSlice.js';
 
 const Connections = () => {
   const dispatch = useDispatch();
-  const { data: connections, status } = useSelector(state => state.connection);
+  const connections = useSelector(state => state.connection);
 
   const fetchConnections = async () => {
     try {
+      if(connections.length > 0)
+        return;
       const res = await axios.get(
         BASE_URL + "/user/connections",
         { withCredentials: true }
       );
       dispatch(addConnections(res.data?.connectionsData));
+      console.log(res.data?.connectionsData);
+      
     }
     catch (err) {
       console.error(err);
@@ -25,9 +29,10 @@ const Connections = () => {
     fetchConnections();
   }, []);
 
-  if (status === 'idle') return null;
+  if(!connections)
+    return;
 
-  if (connections.length == 0) {
+  if (connections.length === 0) {
     return <h1 className='flex justify-center my-3 text-xl'>No Connections found!</h1>
   }
 

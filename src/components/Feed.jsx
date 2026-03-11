@@ -11,7 +11,7 @@ const Feed = () => {
   const feed = useSelector(store => store.feed);
   
   const fetchFeed = async () => {
-    if(feed)
+    if(feed.length > 0)
       return;
     try {
       const res = await axios.get(
@@ -29,7 +29,10 @@ const Feed = () => {
     fetchFeed();
   }, [])
 
-  if(!feed || feed.length == 0){
+  if(!feed)
+    return;
+
+  if(feed.length === 0){
     return <h1 className='flex justify-center my-10 text-2xl'>No more users!</h1>;
   }
 
